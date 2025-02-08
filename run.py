@@ -5,6 +5,7 @@ import os
 
 # 设置页面标题
 st.title("题目分析")
+st.markdown("<p style='text-align: left; color: red;'>读取数据会很慢，请耐心等待。右上角有个小人在动，就表示正在运行。如果担心上课时候打不开，按键盘的“ctrl+p”,可以将当前页面保存为PDF。此外，点击右上角的三点图标，还可以进行一些设置，比如设置为宽屏。</p>", unsafe_allow_html=True)
 
 # 自动读取当前目录下所有的xlsx文件
 file_list = [f for f in os.listdir() if f.endswith('.xlsx')]
@@ -83,8 +84,16 @@ if file_list:
 
         i += 1  # 处理下一道题
 
-    # 按正确率升序排序
-    sorted_results = sorted(results, key=lambda x: x['正确率'])
+    # 添加排序选项
+    sort_option = st.selectbox("选择排序方式:", ["按照题目原本顺序", "按照正确率升序", "按照正确率降序"])
+
+    # 根据选择的排序方式进行排序
+    if sort_option == "按照正确率升序":
+        sorted_results = sorted(results, key=lambda x: x['正确率'])
+    elif sort_option == "按照正确率降序":
+        sorted_results = sorted(results, key=lambda x: x['正确率'], reverse=True)
+    else:
+        sorted_results = results  # 保持原本顺序
 
     # 创建导航栏
     st.sidebar.title("题目导航")
