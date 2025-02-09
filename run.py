@@ -4,7 +4,7 @@ import altair as alt
 import os
 
 # 设置页面标题
-st.title("题目分析")
+st.title("题目分析-数学")
 st.markdown("<p style='text-align: left; color: red;'>读取数据会很慢，请耐心等待。右上角有个小人在动，就表示正在运行。如果担心上课时候打不开，按键盘的“ctrl+p”,可以将当前页面保存为PDF。此外，点击右上角的三点图标，还可以进行一些设置，比如设置为宽屏。</p>", unsafe_allow_html=True)
 
 # 自动读取当前目录下所有的xlsx文件
@@ -56,7 +56,7 @@ if file_list:
         result.columns = ['答案', '出现次数']
 
         # 添加学生列
-        result['学生'] = result['答案'].apply(lambda x: ', '.join(df[df[answer_col] == x]['姓氏'] + df[df[answer_col] == x]['名']))
+        result['学生'] = result['答案'].apply(lambda x: ', '.join(df[df[answer_col] == x]['姓氏'].astype(str) + df[df[answer_col] == x]['名'].astype(str)))
 
         standard_answer_col = f'标准答案{i}'  # 动态生成标准答案列名
         
